@@ -1,0 +1,67 @@
+{
+  "name": "dsh-liang-publish",
+  "version": "0.1.0",
+  "description": "梁工发布中控 · 一期视频发四平台（B站/小红书/抖音/视频号）：AI 读文章资料写文案→生成发布工程→按 bsk 本机浏览器自动填写上传页（只填写不发布，最后一下由你点）→取链接回填→每天采流量粉丝→第1/3/7天复盘。控制通道用 browser-skill（bsk）驱动你已登录的本机 Chrome，不新开浏览器。方法论移植自 CzzzzzzJ/mdldm-maitian（MIT）与 mdldm-maitian-publisher（Apache-2.0）。",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/host.js",
+  "exports": {
+    ".": "./src/host.js",
+    "./client": "./dist/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "src",
+    "dist",
+    "lib",
+    "lab",
+    "skills",
+    "locale/*.json",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "publish",
+    "bilibili",
+    "xiaohongshu",
+    "douyin",
+    "channels",
+    "multi-platform"
+  ],
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0",
+    "dsh": ">=0.2.1-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": []
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "dev": "node scripts/devserver.mjs",
+    "prepare": "npm run build",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.19.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.10"
+  }
+}

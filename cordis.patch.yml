@@ -1,0 +1,5 @@
+# 梁工发布中控：liang_publish / liang_data 工具 + liang-publish 技能 + 侧栏看板。
+# 浏览器半边由 dsh.client 声明加载；页面填写与采集走 lib/bsk.js（browser-skill CLI）。
+- insert:
+    - id: liang-publish
+      name: '梁工发布中控'

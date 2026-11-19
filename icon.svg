@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- 梁工发布中控：纸飞机（分发）+ 四个平台信号点 + 底部数据折线 -->
+  <path d="M3 11.5 21 4l-7.5 17-2.8-6.7L3 11.5z"/>
+  <path d="M10.7 14.3 21 4"/>
+  <path d="M4 19.5h3.2M9.4 21h4.8M16.4 19.5H20" stroke-width="1.4"/>
+</svg>
