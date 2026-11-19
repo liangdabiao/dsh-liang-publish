@@ -7,6 +7,8 @@ import { join } from 'node:path';
 
 const dir = mkdtempSync(join(tmpdir(), 'liang-review-'));
 process.env.LIANG_DB = join(dir, 'hub.db');
+// followers/metrics 的 day 一律北京时间日期（与 lib 采集端 today()/dayOf() 同一约定）
+const bjDay = (t) => new Date(t + 8 * 3600e3).toISOString().slice(0, 10);
 
 let mod;
 before(async () => {
@@ -23,14 +25,14 @@ before(async () => {
   // 发布当天：b站播放 1000（采样）；第二天：5000
   db.prepare('INSERT INTO samples (ts, episode_id, platform, views, likes, comments, favorites, shares) VALUES (?,?,?,?,?,?,?,?)')
     .run(new Date(t0 + 3600e3).toISOString().slice(0, 16), 'ep_test_12', 'bilibili', 1000, 100, 20, 30, 5);
-  const day2 = new Date(t0 + 86400e3).toISOString().slice(0, 10);
+  const day2 = bjDay(t0 + 86400e3);
   db.prepare('INSERT INTO metrics (day, episode_id, platform, views, likes, comments, favorites, shares, extra, collected_at) VALUES (?,?,?,?,?,?,?,?,?,?)')
     .run(day2, 'ep_test_12', 'bilibili', 5000, 400, 60, 80, 20, '{}', new Date().toISOString());
   // 粉丝：期间涨了 30
   db.prepare('INSERT INTO followers (day, platform, total, gain, loss, source, collected_at) VALUES (?,?,?,?,?,?,?)')
-    .run(new Date(t0).toISOString().slice(0, 10), 'bilibili', 1000, null, null, 'daily', new Date().toISOString());
+    .run(bjDay(t0), 'bilibili', 1000, null, null, 'daily', new Date().toISOString());
   db.prepare('INSERT INTO followers (day, platform, total, gain, loss, source, collected_at) VALUES (?,?,?,?,?,?,?)')
-    .run(day2, 'bilibili', 1030, 30, 0, 'daily', new Date().toISOString());
+    .run(bjDay(t0 + 86400e3), 'bilibili', 1030, 30, 0, 'daily', new Date().toISOString());
 });
 
 after(async () => {

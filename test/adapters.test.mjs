@@ -83,7 +83,7 @@ test('抖音：标题/正文/话题真实点击/双封面/定时', async () => {
 test('视频号：文本锚点定位，短标题/描述/话题/定时/双封面', async () => {
   const br = createBridge({ pages: { [channels.url]: channelsPage } });
   await br.open(channels.url);
-  const ctx = ctxFor({ shortTitle: '短标题测试用力', body: '描述第一行\n#话题丁 ', topics: ['话题丁'] }, SCHEDULE_ISO);
+  const ctx = ctxFor({ shortTitle: '短标题测试用力', body: '描述第一行', topics: ['话题丁'] }, SCHEDULE_ISO);
   await channels.fill(br, ctx);
   const st = br.page.state;
   assert.equal(st.shortTitle, '短标题测试用力');

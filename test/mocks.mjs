@@ -125,7 +125,7 @@ export function channelsPage() {
       '支持上传': { kind: 'upload', text: '支持上传 8 小时以内', field: 'videoFile', effect: (s) => { s.videoDone = true; } },
       'wujie-app': { kind: 'text', text: () => '视频号助手' },
       '填写短标题有机会获得更多流量': { kind: 'input', field: 'shortTitle', text: '填写短标题有机会获得更多流量' },
-      '输入描述': { kind: 'editor', field: 'body', text: '输入描述' },
+      '添加描述': { kind: 'editor', field: 'body', text: '添加描述' },
       '定时': { kind: 'button', text: '定时', effect: (s) => { s.schedOn = true; } },
       '请选择发表时间': { kind: 'button', text: '请选择发表时间', visible: (s) => s.schedOn, effect: (s) => { s.calOpen = true; } },
       '下个月': { kind: 'button', text: '下个月', effect: () => {} },
