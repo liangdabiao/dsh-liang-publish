@@ -6,7 +6,7 @@ const hubops = await import('../lib/hubops.js');
 
 const dir = process.argv[2] || 'D:/1120test';
 const only = process.argv[3] ? process.argv[3].split(',') : null;
-const r = await hubops.runEpisode(dir, { force: true, only, onState: (st) => {
+const r = await hubops.runEpisode(dir, { force: true, only, autoPublish: true, onState: (st) => {
   const tail = (st.logs || []).slice(-1)[0];
   if (tail) console.log('[状态]', st.name, '→', st.status, '｜', tail.kind + ': ' + tail.msg.slice(0, 110));
 } });
