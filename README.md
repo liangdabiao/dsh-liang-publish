@@ -1,6 +1,8 @@
 # 梁工发布中控（dsh-liang-publish）
 
 一期视频，发四个平台（**B站 / 小红书 / 抖音 / 视频号**），发完自动记数据、出复盘。
+<img width="1929" height="728" alt="image" src="https://github.com/user-attachments/assets/30d81354-39b5-459d-9661-9d28764ec0ea" />
+
 
 **核心原则：只填写，不点发布。** 国内四家最后的「发布 / 定时发布」永远由你自己点——防重、防风控是产品底线。
 
