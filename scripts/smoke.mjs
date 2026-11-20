@@ -99,13 +99,13 @@ writeFileSync(join(dir, '封面', 'cover-4x3.png'), 'x');
 writeFileSync(join(dir, '发布素材.md'), MD);
 
 const step = (name, ok, extra = '') => {
-  console.log(`${ok ? '✅' : '❌'} ${name}${extra ? ` — ${extra}` : ''}`);
-  if (!ok) { console.error(`冒烟在「${name}」失败`); process.exit(1); }
+  console.log(`${ok ? '✅' : '❌'} ${name}${extra ? ` — ${extra.split('\n').pop()}` : ''}`);
+  if (!ok) { console.error(`冒烟在「${name}」失败，详情：\n${extra}`); process.exit(1); }
 };
 
 // ① make
 const made = projectMod.buildProject(join(dir, '发布素材.md'), dir, { requireTag: '梁工学AI' });
-step('make 生成 publish.json 并通过校验', made.ok === true, made.text.split('\n').slice(-1)[0]);
+step('make 生成 publish.json 并通过校验', made.ok === true, made.text);
 
 // ② plan
 const name = hub.planDir(dir);

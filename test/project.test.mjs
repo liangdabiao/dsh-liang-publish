@@ -9,7 +9,7 @@ import { buildProject, validateProjectData } from '../lib/project.mjs';
 const MD = `# AI 实战 · 第 12 期｜用 Agent 自动整理资料
 
 > 序号：12
-> 定时发布：2026-11-20 18:00
+> 定时发布：${new Date(Date.now() + 3 * 3600e3 + 8 * 3600e3).toISOString().slice(0, 16).replace('T', ' ')}
 
 ## 二、B站
 **标题：**
@@ -59,7 +59,10 @@ test('buildProject：md → publish.json 字段齐全', () => {
     assert.equal(project.id, dir.split(/[\\/]/).pop());
     assert.equal(project.episode, 12);
     assert.equal(project.name.includes('Agent 自动整理资料'), true);
-    assert.equal(project.schedule, '2026-11-20T18:00:00+08:00');
+    const pad = (n) => String(n).padStart(2, '0');
+    const d = new Date(Date.now() + 3 * 3600e3 + 8 * 3600e3);
+    const wantSched = `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}T${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}:00+08:00`;
+    assert.equal(project.schedule, wantSched);
     assert.equal(project.video, '成片.mp4');
     assert.deepEqual(project.covers, { '3x4': '封面/cover-3x4.png', '4x3': '封面/cover-4x3.png' });
     assert.equal(project.platforms.bilibili.title, '用 Agent 自动整理资料，效率翻十倍');
