@@ -1,3 +1,6 @@
 {
-  "panel.title": "梁工发布中控"
+  "meta": {
+    "title": "Liang publish hub",
+    "description": "Publish one video to Bilibili, Xiaohongshu, Douyin and WeChat Channels: draft four-platform copy, build and validate the release project, then let bsk fill the upload pages in your own Chrome (fill only, you click Publish), collect links, track metrics and followers daily, and review on day 1/3/7."
+  }
 }

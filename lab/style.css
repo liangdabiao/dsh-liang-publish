@@ -2,12 +2,19 @@
 :root {
   --bg: #f5f1e8; --card: #fffdf8; --ink: #2c2620; --muted: #8a8175;
   --line: #e6dfd2; --ok: #3e8e41; --warn: #b97324; --err: #c14a3a; --accent: #4a7d5d;
+  /* 平台品牌色：抖音是纯黑 #323232，深色底上会消失，深色方案里换成米白 */
+  --p-bilibili: #fb7299; --p-xhs: #ff2442; --p-douyin: #323232; --p-channels: #07c160;
 }
 [data-scheme="dark"] {
   --bg: #171512; --card: #201d19; --ink: #e8e2d6; --muted: #94897a;
   --line: #332e27; --ok: #7dc47f; --warn: #e0a04e; --err: #e2776a; --accent: #8fbf9f;
+  --p-bilibili: #fb7299; --p-xhs: #ff5c72; --p-douyin: #d9d2c6; --p-channels: #2fd27a;
 }
 * { box-sizing: border-box; }
+/* ★ 必须放在所有 display 规则之前也压得住：.job / .modal 自己写了 display:flex，
+   默认的 [hidden]{display:none} 是 UA 样式，作者样式的 display 会赢——不写这条，
+   弹窗遮罩（inset:0 z-index:30）从面板加载起就一直盖在页面上，整个面板点不动。 */
+[hidden] { display: none !important; }
 body { margin: 0; font-family: "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif; background: var(--bg); color: var(--ink); font-size: 13.5px; }
 .muted { color: var(--muted); }
 .pad { padding: 24px; }

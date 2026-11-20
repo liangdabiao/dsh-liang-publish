@@ -3,7 +3,8 @@
 const $ = (id) => document.getElementById(id)
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
 const P_NAMES = { bilibili: 'B站', xhs: '小红书', douyin: '抖音', channels: '视频号' }
-const P_COLORS = { bilibili: '#fb7299', xhs: '#ff2442', douyin: '#323232', channels: '#07c160' }
+// 颜色走 CSS 变量（style.css 里按明暗两套定义）：抖音是纯黑，深色底上直接消失
+const pColor = (p) => `var(--p-${p}, #888)`
 const fmt = (n) => n == null ? '–' : Number(n).toLocaleString('en-US')
 
 async function api(path, opts) {
@@ -38,7 +39,7 @@ async function loadOverview() {
   const fans = $('fansGrid')
   const items = Object.entries(d.fans || {})
   fans.innerHTML = items.length
-    ? items.map(([p, v]) => `<div class="fan"><span class="dot" style="background:${P_COLORS[p] || '#888'}"></span>${P_NAMES[p] || p} <b>${fmt(v)}</b></div>`).join('')
+    ? items.map(([p, v]) => `<div class="fan"><span class="dot" style="background:${pColor(p)}"></span>${P_NAMES[p] || p} <b>${fmt(v)}</b></div>`).join('')
     : '<span class="muted">还没有粉丝数据，先点「采粉丝」</span>'
 
   const list = d.episodes || []
@@ -50,7 +51,7 @@ async function loadOverview() {
 function epCard(ep) {
   const chips = (ep.tasks || []).map(t => `
     <div class="task">
-      <span class="t-name"><span class="dot" style="width:7px;height:7px;border-radius:50%;background:${P_COLORS[t.platform] || '#888'};display:inline-block"></span>${esc(t.name)}</span>
+      <span class="t-name"><span class="dot" style="width:7px;height:7px;border-radius:50%;background:${pColor(t.platform)};display:inline-block"></span>${esc(t.name)}</span>
       <span class="t-state"><span class="chip ${esc(t.state)}">${esc(t.stateCn)}</span></span>
       ${t.m ? `<span class="t-metric">▶ ${fmt(t.m.views)} · ♥ ${fmt((t.m.likes || 0) + (t.m.comments || 0) + (t.m.favorites || 0) + (t.m.shares || 0))}</span>` : ''}
       ${t.detail ? `<span class="t-detail" title="${esc(t.detail)}">${esc(t.detail)}</span>` : ''}
