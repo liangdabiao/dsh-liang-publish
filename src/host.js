@@ -82,9 +82,10 @@ function runAsJob(name, fn) {
 export const liangPublishTool = {
   name: 'liang_publish',
   description:
-    '梁工发布中控：一期视频发四平台（B站/小红书/抖音/视频号，只填写不点发布，用 bsk 驱动本机 Chrome）。' +
-    '流程：make（发布素材.md → publish.json + 校验）→ plan（进分发计划）→ run（后台自动填写上传页）→ 用户点发布 → sync（取链接回填）。' +
-    '另有 status 看状态、adopt 登记往期、doctor 体检登录态、mark 人工标记已发布。',
+    '梁工发布中控：一期视频/一篇文章发四平台（B站/小红书/抖音/视频号，bsk 驱动本机 Chrome）。' +
+    '视频：make（发布素材.md→publish.json+校验）→plan→run（自动填写上传页）→用户点发布→sync。' +
+    '文章（B站专栏）：make_article（markdown→文章工程）→plan→run（自动填写专栏编辑器+发布）。' +
+    '另有 status/adopt/doctor/mark/sync。',
   parameters: {
     type: 'object',
     additionalProperties: false,
@@ -168,6 +169,13 @@ export const liangPublishTool = {
       let out = ''
       for (const e of list) out += `\n【${e.id}】${e.name}  定时 ${e.schedule || '立即'}\n${stateTable(e.id)}\n`
       return result(true, `共 ${list.length} 期${args.id ? '' : '（最近优先）'}：`, out.trim(), '开跑用 run；取链接用 sync。')
+    }
+    if (args.action === 'make_article') {
+      if (!args.mdPath || !args.dir) throw new Error('make_article 需要 mdPath + dir')
+      const dir = dirOf(cfg, args.dir)
+      const { buildArticleProject } = await import('../lib/project.mjs')
+      const r = buildArticleProject(args.mdPath, dir)
+      return result(true, `文章 publish.json 已生成：${dir}（B站专栏）`, r.text, '下一步：plan 进分发计划 → run（autoPublish 自动发布）。')
     }
     if (args.action === 'doctor') {
       return runAsJob('登录体检（四平台上传页）', async ({ write }) => {
